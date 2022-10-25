@@ -15,3 +15,5 @@ git1
 ssh
 
 ts edit
+
+pull test

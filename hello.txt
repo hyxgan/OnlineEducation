@@ -13,3 +13,5 @@ niu
 git1 
 
 ssh
+
+ts edit

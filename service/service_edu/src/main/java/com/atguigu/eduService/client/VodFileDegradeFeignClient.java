@@ -20,6 +20,6 @@ public class VodFileDegradeFeignClient implements VodClient{
     @Override
     public R BatchdeleteVideo(List<String> videoList) {
         System.out.println("批量删除视频失败");
-        return R.error().message("批量删除视频失败");
+        return R.error().message("批量删除视频失败了");
     }
 }

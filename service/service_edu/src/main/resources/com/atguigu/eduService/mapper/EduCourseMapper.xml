@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.eduService.mapper.EduCourseMapper">
+<!--      CoursePublishVo selectCoursePublishById(@Param("courseId") String courseId);    -->
+    <select id="selectCoursePublishById" resultType="com.atguigu.eduService.entity.vo.CoursePublishVo">
+        SELECT ec.id AS id,ec.title AS title,ec.cover,ec.price AS price ,ec.lesson_num AS lessonNum,et.name AS teacherName ,e1.title AS subjectLevelOne ,e2.title AS subjectLevelTwo
+        FROM edu_course ec LEFT JOIN edu_course_description ed ON ec.id = ed.id
+                           LEFT JOIN edu_teacher et ON ec.teacher_id = et.id
+                           LEFT JOIN edu_subject e1 ON ec.subject_parent_id = e1.id
+                           LEFT JOIN edu_subject e2 ON ec.subject_id = e2.id
+        WHERE ec.id = #{courseId}
+    </select>
+
+
+<!--    CourseWebVo selectInfoWebById(String courseId);-->
+<!--    前台页面点击课程后，显示课程的详细信息-->
+    <select id="selectInfoWebById" resultType="com.atguigu.eduService.entity.frontVo.CourseWebVo">
+        SELECT
+            c.id,
+            c.title,
+            c.cover,
+            CONVERT(c.price, DECIMAL(8,2)) AS price,
+             c.lesson_num AS lessonNum,
+             c.cover,
+             c.buy_count AS buyCount,
+             c.view_count AS viewCount,
+             cd.description,
+             t.id AS teacherId,
+             t.name AS teacherName,
+             t.intro,
+             t.avatar,
+             s1.id AS subjectLevelOneId,
+             s1.title AS subjectLevelOne,
+             s2.id AS subjectLevelTwoId,
+             s2.title AS subjectLevelTwo
+        FROM
+            edu_course c
+            LEFT JOIN edu_course_description cd ON c.id = cd.id
+            LEFT JOIN edu_teacher t ON c.teacher_id = t.id
+            LEFT JOIN edu_subject s1 ON c.subject_parent_id = s1.id
+            LEFT JOIN edu_subject s2 ON c.subject_id = s2.id
+        WHERE
+            c.id = #{courseId}
+    </select>
+</mapper>
